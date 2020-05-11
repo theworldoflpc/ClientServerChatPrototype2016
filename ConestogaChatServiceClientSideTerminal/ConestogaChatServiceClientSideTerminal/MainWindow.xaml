@@ -1,0 +1,214 @@
+﻿<!--
+ FILE : ConestogaChatServiceClient.xaml
+ PROJECT : PROG2120 - Windows and Mobile Programming - Assignment #4
+ PROGRAMMER : JMarkic and lpcSetProg
+ FIRST VERSION : 2016-11-15
+ DESCRIPTION :   
+ This file contains the XAML code for the Client side of the chat program. 
+ The WPF GUI for this program is modeled on the idea of an internal chat program for Conestoga College. 
+ -->
+ 
+
+<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="Condor Chat Service - Client Window" Height="800" Width="976.5" MinWidth="520" Background="Black"
+        WindowStyle="ToolWindow"  
+        FocusManager.FocusedElement="{Binding ElementName=userNameTextBox}" Closing="Close_Client"
+        >
+
+
+
+    <Grid Margin="0,0,-22,-20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160*"/>
+            <RowDefinition Height="17*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="77*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="864*"/>
+            <ColumnDefinition Width="35*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Rectangle Stroke="#BF965C" StrokeThickness="4"   Fill="Gray" Margin="6,0,18,-19" Grid.ColumnSpan="4" Grid.RowSpan="2"/>
+
+        <!-- List box with all active clients/aliases -->
+        <ListBox Name="ClientListBox" Margin="46,208,705,93" BorderThickness="4" Grid.ColumnSpan="3" SelectionMode="Multiple" />
+
+        
+        <!-- message field . where user inputs their chat message -->
+        <TextBox x:Name="MessageField" HorizontalAlignment="Left" Height="103" Margin="282,571,0,0" 
+                  Language="en-US"   MaxLength ="327"
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Grid.Column="2" />
+
+        
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="103" Margin="176,571,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="98" Grid.Column="2"/>
+
+
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="74" Margin="704,74,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="136" Grid.Column="2"/>
+
+
+        <Label x:Name="label3"  Padding="3"  Content="Your Current Status :" HorizontalAlignment="Left" Margin="716,48,0,0" 
+               VerticalAlignment="Top" RenderTransformOrigin="0.132,0.128" Width="116" Grid.Column="2"/>
+
+
+        <Image x:Name="image" Source="condors-logo.png                " HorizontalAlignment="Left" Height="91" Margin="58,27,0,0" 
+               VerticalAlignment="Top" Width="283" Grid.ColumnSpan="3"/>
+
+        <!-- user name text box . where user write their desired name . always small caps-->
+        <TextBox x:Name="userNameTextBox"  Foreground="Black"  Grid.Column="2" HorizontalAlignment="Left" Height="23" 
+                 Margin="330,46,0,0" VerticalAlignment="Top" Width="164" TextChanged="userNameTextBox_TextChanged"
+                 TextWrapping="NoWrap"    MaxLength="45"  Padding="3" CharacterCasing="Lower"
+                 />
+
+        <!-- server name text box . where user write their desired server name to connect to . always ALL caps by default-->
+        <TextBox x:Name="ServerNameTextBox" Foreground="Gray"  Grid.Column="2" HorizontalAlignment="Left" 
+                 Height="23" Margin="330,79,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="164"
+                 Padding="3"  MaxLength="15" 
+                 Text="2A213-A03" TextChanged="ServerNameTextBox_TextChanged" 
+                 CharacterCasing="Upper"
+                 />
+
+
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="103" Margin="745,571,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="107" Grid.Column="2"/>
+
+
+        <Button x:Name="SendButton" IsEnabled="False" Content="Send" Grid.Column="2" HorizontalAlignment="Left" Margin="179,574,0,0" 
+                VerticalAlignment="Top" Width="90" Height="96" Click="button2_Click"/>
+
+
+        <Button x:Name="clearButton2" Content="Clear" Grid.Column="2" HorizontalAlignment="Left" Margin="749,575,0,0" 
+                VerticalAlignment="Top" Width="99" Height="96" Click="button2_Copy_Click"/>
+
+        
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="30" Margin="501,43,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="59" Grid.Column="2"/>
+
+        <!-- Approve server name-->
+        <Button x:Name="checkUserName"  Content="Check" HorizontalAlignment="Left" Margin="504,47,0,0" VerticalAlignment="Top" 
+                Width="53" Grid.Column="2" Height="22" Click="client_button_Click" IsEnabled="True"/>
+
+
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="30" Margin="501,76,0,0" Stroke="#BF965C" StrokeThickness="4" 
+                   VerticalAlignment="Top" Width="59" Grid.Column="2"/>
+
+        
+        <!-- Approve server name-->
+        <Button x:Name="checkServerName" Content="Connect" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" 
+                Width="53" Grid.Column="2" Height="22" Click="server_button_Click" IsEnabled="True"/>
+
+        
+        <Label x:Name="label2_Copy" Content="Enter User Name (Max. 45):" HorizontalAlignment="Left" Margin="187,44,0,0" 
+               VerticalAlignment="Top" Width="147" Grid.Column="2" FontWeight="Bold" FontSize="10"/>
+
+        
+        <Label x:Name="label2_Copy1" Content="Connect to Server:" HorizontalAlignment="Left" Margin="229,77,0,0" 
+               VerticalAlignment="Top" Width="116" Grid.Column="2" FontWeight="Bold" FontSize="10"/>
+
+        <!-- connected button-->
+        <Button x:Name="ConnectedButton" Background="Green" Content="Connected" Grid.Column="2" HorizontalAlignment="Left" 
+                Margin="708,78,0,0" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.5,0.5"
+                IsEnabled="False" Height="32"/>
+
+        
+        <!-- Disconnected button-->
+        <Button x:Name="DisconnectedButton" Background="Red" Content="Disconnected" Grid.Column="2" 
+                HorizontalAlignment="Left" Margin="708,110,0,0" VerticalAlignment="Top" Width="128"
+                 IsEnabled="True" Height="34"/>
+        
+        
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="26" Margin="565,78,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="83" Grid.Column="2"/>
+
+        <!-- Disconnect button -->
+        <Button x:Name="DisconnectButton" IsEnabled="False" Content="Disconnect" Grid.Column="2" HorizontalAlignment="Left" 
+                Margin="569,81,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.062,-1.1" Click="button3_Click" Height="21"/>
+
+        
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="28" Margin="565,44,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="83" Grid.Column="2"/>
+        
+        <!-- Clear button -->
+        <Button x:Name="ClearButton1" Content="Clear " Grid.Column="2" HorizontalAlignment="Left" Margin="569,48,0,0" 
+                VerticalAlignment="Top" Width="75" Click="button3_Click_1" Height="21"/>
+        
+        
+        <Image x:Name="Logo2" Source="ConestogaCollegeLogo.png" HorizontalAlignment="Left" Height="71" Margin="603,689,-47,0" 
+               VerticalAlignment="Top" Width="343" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        
+         <!-- Definition of chat tabs begins -->
+        <TabControl x:Name="MessageTerminalScreen" HorizontalAlignment="Left" Height="383" Margin="178,164,0,0" 
+                    VerticalAlignment="Top" Width="666" Grid.Column="2">
+            
+            <!-- Private chat tab-->
+            <TabItem x:Name="PrivateChatTab"  Header="Private Chat - Offline" Margin="-4,-3,-102,1" >
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="61*"/>
+                        <ColumnDefinition Width="269*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="PrivateChatTabTextBox" HorizontalAlignment="Center" Height="355" TextWrapping="Wrap"    VerticalAlignment="Top" Width="660" 
+                             IsReadOnly="True" Grid.ColumnSpan="2" Margin="1,2,-1,-2"/>
+                </Grid>
+
+            <!-- Broadcast chat tab-->
+            </TabItem>
+            <TabItem x:Name="BroadcastChatTab"  Header="Broadcast Chat - Offline" Margin="102,-4,-186,2" >
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="BroadcastTabTextBox" HorizontalAlignment="Center" Height="355" TextWrapping="Wrap"    VerticalAlignment="Top" Width="660" 
+                             IsReadOnly="True"/>
+                </Grid>
+
+            <!-- Group chat tab-->
+            </TabItem>
+            <TabItem x:Name="GroupChatTab"  Header="Group Chat - Offline" Margin="185,-3,-283,1" >
+                <Grid Background="#FFE5E5E5" Margin="3,3,-3,-3">
+                    <TextBox x:Name="GroupChatTabTextBox" Height="373" TextWrapping="Wrap"    VerticalAlignment="Top" 
+                             IsReadOnly="True" Margin="-9,-37,0,0" HorizontalAlignment="Right" Width="669"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <!-- End of chat tabs-->
+        
+        
+        <Rectangle Grid.Column="2" Fill="LightGray" HorizontalAlignment="Left" Height="38" Margin="62,632,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="92"/>
+
+        <!--select all Button -->
+        <Button x:Name="selectAllButton" Content="Select All" Grid.Column="2"  HorizontalAlignment="Left" Margin="66,635,0,0" Width="84" 
+                Click="selectAllButton_Click" Height="31" VerticalAlignment="Top" IsEnabled="False"/>
+
+        <Rectangle Fill="Gray" HorizontalAlignment="Left" Height="38" Margin="43,632,0,0" Stroke="#BF965C" 
+                   StrokeThickness="4" VerticalAlignment="Top" Width="93" Grid.ColumnSpan="3"/>
+
+        <!--Select Button -->
+        <Button x:Name="selectButton" Content="Select" IsEnabled="False" HorizontalAlignment="Left" Margin="46,636,0,0" 
+                VerticalAlignment="Top" Width="87" Height="30" Click="selectButton_Click" Grid.ColumnSpan="3"/>
+        
+        
+        <Rectangle Grid.Column="2" Fill="LightGray" HorizontalAlignment="Left" Height="38" Margin="63,162,0,0" Stroke="#BF965C"
+                   StrokeThickness="4" VerticalAlignment="Top" Width="92"/>
+        
+        <!--Deselect Button -->
+        <Button x:Name="Deselect" Content="Deselect " Grid.Column="2" IsEnabled="False" HorizontalAlignment="Left" 
+                Margin="67,166,0,0" VerticalAlignment="Top" Width="84" Click="Deselect_Click" Height="30"/>
+        
+        
+        <Label x:Name="label1" Content="Active Clients" HorizontalAlignment="Left" Margin="54,169,0,0" VerticalAlignment="Top"
+               Width="83" RenderTransformOrigin="0.537,0.404" Grid.ColumnSpan="3"/>
+
+
+    </Grid>
+    <!--End of grid definition -->
+    
+</Window>
